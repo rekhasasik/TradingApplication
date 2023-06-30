@@ -1,19 +1,19 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>TradingApplication</groupId>
-  <artifactId>TradingApplication</artifactId>
+  <groupId>com.trade</groupId>
+  <artifactId>trading-application</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <modules>
-  	<module>trading-app</module>
+  <modules>	  
   	<module>trading-algo</module>
+  	<module>trading-app</module>
   </modules>
   <name>Trading Application</name>
   <description>Handle Events</description>
   <properties>
 		<java.version>11</java.version>
 		<spring.boot.version>2.7.3</spring.boot.version>
-		<context.root>trading-application</context.root>
+		<context.root>trading-app</context.root>
 		<junit.jupiter.version>5.9.1</junit.jupiter.version>
         <junit.platform.version>1.9.1</junit.platform.version>
 	</properties>
