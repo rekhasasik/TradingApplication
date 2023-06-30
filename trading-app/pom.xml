@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <parent>
-    <groupId>TradingApplication</groupId>
-    <artifactId>TradingApplication</artifactId>
+    <groupId>com.trade</groupId>
+    <artifactId>trading-application</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>trading-app</artifactId>
@@ -23,7 +23,7 @@
   
   <dependencies>
 	  <dependency>
-		  <groupId>TradingApplication</groupId>
+		  <groupId>com.trade.algo</groupId>
 		  <artifactId>trading-algo</artifactId>
 		  <version>${project.version}</version>
 	  </dependency>
@@ -47,6 +47,37 @@
 	  </dependency>
 	  
 	  <dependency>
+		  <groupId>io.rest-assured</groupId>
+		  <artifactId>rest-assured</artifactId>
+		  <version>5.3.1</version>
+		  <scope>test</scope>
+		  <exclusions>
+            <exclusion>
+                <groupId>org.apache.groovy</groupId>
+                <artifactId>groovy</artifactId>
+            </exclusion>
+            <exclusion>
+                <groupId>org.apache.groovy</groupId>
+                <artifactId>groovy-xml</artifactId>
+            </exclusion>
+        </exclusions>
+	  </dependency>
+	  
+	  <dependency>
+		  <groupId>org.mockito</groupId>
+		  <artifactId>mockito-core</artifactId>
+		  <scope>test</scope>
+		  <version>5.4.0</version>
+	  </dependency>
+	  
+	  <dependency>
+		  <groupId>org.mockito</groupId>
+		  <artifactId>mockito-junit-jupiter</artifactId>
+		  <scope>test</scope>
+		  <version>5.4.0</version>
+	  </dependency>
+	  
+	  <dependency>
     		<groupId>org.apache.commons</groupId>
     		<artifactId>commons-lang3</artifactId>
       </dependency>
@@ -55,6 +86,12 @@
     	    <groupId>org.apache.commons</groupId>
     		<artifactId>commons-collections4</artifactId>
     		<version>4.1</version>
+	  </dependency>
+	  
+	  <dependency>
+		  <groupId>org.projectlombok</groupId>
+		  <artifactId>lombok</artifactId>
+		  <version>1.18.28</version>
 	  </dependency>
 	  
 	   <dependency>
