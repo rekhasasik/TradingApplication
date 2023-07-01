@@ -1,10 +1,8 @@
 package com.trade.signal.service;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.trade.command.Command;
-import com.trade.command.ICommandExecutor;
+import com.trade.command.executor.CommandExecutor;
 import com.trade.exception.BadInputException;
-import com.trade.factory.BeanFactory;
 import com.trade.signal.handler.ISignalHandler;
 
 
@@ -28,9 +25,10 @@ import com.trade.signal.handler.ISignalHandler;
 @Service("process")
 public class SignalProcessor implements ISignalHandler {
 	
+	@Autowired
+	private CommandExecutor commandExecutor;
 	
-	@Autowired 
-	private BeanFactory beanFactory;
+	
 	
 	/**
 	 * Executes the Given Signal. If signalId doesn't match given cases, then executed default block
@@ -58,22 +56,14 @@ public class SignalProcessor implements ISignalHandler {
         	execute(signalDefault(), null);
             break;
     }
+		
+	execute(postProcessingSignal(), signalId);
 
    
 }
 
 	
-	/**
-	 * Picks the right ICommandExecutor based on type of command and executes the commands of signal
-	 * @param command
-	 * @return
-	 */
-	private ICommandExecutor getCommandExecutor(String type) {
-		if(type == null) {
-			throw new BadInputException("Null Executor Input");
-		}
-		return beanFactory.getCommandExecutor(type);
-	}
+	
 	
 	
 	/**
@@ -89,15 +79,9 @@ public class SignalProcessor implements ISignalHandler {
 		if(CollectionUtils.isEmpty(commands)) {
 			throw new BadInputException("No Commands for "+((Signal == null)?"default":Integer.toString(Signal)));
 		}
-		groupByCommands(commands).entrySet().stream().forEach(e -> e.getKey().execute(e.getValue()));
+		commandExecutor.execute(commands);
 	}
 	
-	private Map<ICommandExecutor, List<Command>> groupByCommands(List<Command> commands) {
-		return commands.stream().collect(Collectors.groupingBy(Command::getType))
-		 .entrySet().stream().map(e -> new AbstractMap.SimpleImmutableEntry<ICommandExecutor, List<Command>>(getCommandExecutor(e.getKey()), e.getValue()))
-		 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
-		
-	}
 	
 	private List<Command> buildSignal1() {
 		List<Command> commands = new ArrayList<>();
@@ -153,9 +137,18 @@ public class SignalProcessor implements ISignalHandler {
 		
 	}
 	
-	public static List<Command> signalDefault() {
+	private List<Command> signalDefault() {
 		List<Command> commands = new ArrayList<>();
 		Command command = new Command("cancelTrades", "algo", null);
+		commands.add(command);
+		return commands;
+		
+		
+	}
+	
+	private List<Command> postProcessingSignal() {
+		List<Command> commands = new ArrayList<>();
+		Command command = new Command("doAlgo", "algo", null);
 		commands.add(command);
 		return commands;
 		

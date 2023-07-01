@@ -1,20 +1,15 @@
 package com.trade.adaptor;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.util.CollectionUtils;
 
 import com.trade.algo.Algo;
 import com.trade.command.Command;
 import com.trade.command.Handler;
-import com.trade.command.ICommandExecutor;
 import com.trade.exception.BadInputException;
 
 /**
@@ -31,9 +26,7 @@ import com.trade.exception.BadInputException;
  *
  */
 @Component("algo")
-public class AlgoAdapter implements ICommandExecutor {
-	
-	private static final Logger logger = LoggerFactory.getLogger(AlgoAdapter.class);
+public class AlgoAdapter implements IAdaptor {
 	
 	
 	private Map<String, Handler<Algo>> handlerMap = new HashMap<>();
@@ -87,28 +80,22 @@ public class AlgoAdapter implements ICommandExecutor {
 	
 
 	@Override
-	public void execute(List<Command> command) {
+	public void execute(Command command) {
 		    Algo algo = new Algo();
-			if(CollectionUtils.isEmpty(command)) {
-				logger.warn("No commands to process");
-				return;
+			if(null == command) {
+				throw new BadInputException("NULL Command");
 			}
 			
-			command.forEach(c ->  {
+			
 				
-				if(null == handlerMap.get(c.getName())) {
-					throw new BadInputException("Command "+c.getName()+" Invalid");
+				if(null == handlerMap.get(command.getName())) {
+					throw new BadInputException("Command "+command.getName()+" Invalid");
 				}
 				
-				handlerMap.get(c.getName()).handle(c , algo);
-			});
-			Command doCommand = doAlgoCommand();
-			handlerMap.get(doCommand.getName()).handle(doCommand, algo);
+				handlerMap.get(command.getName()).handle(command , algo);
+		
 	}
 	
-	private Command doAlgoCommand() {
-		return new Command("doAlgo", "algo", null);
-	}
 	
 	private Integer castToInteger(Object o) {
 		if(o == null) {

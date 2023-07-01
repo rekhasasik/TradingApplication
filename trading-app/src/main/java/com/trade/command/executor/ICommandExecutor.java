@@ -1,6 +1,8 @@
-package com.trade.command;
+package com.trade.command.executor;
 
 import java.util.List;
+
+import com.trade.command.Command;
 
 /**
  * Executes a given command from an adaptor class

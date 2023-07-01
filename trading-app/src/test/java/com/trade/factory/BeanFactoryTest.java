@@ -18,18 +18,18 @@ public class BeanFactoryTest {
 	private BeanFactory beanFactory;
 	
 	@Test
-	void getValidConfigExecutor() {
-		assertEquals(AlgoAdapter.class, ClassUtils.getUserClass(beanFactory.getCommandExecutor("algo").getClass()));
+	void getValidAdaptor() {
+		assertEquals(AlgoAdapter.class, ClassUtils.getUserClass(beanFactory.getAdaptor("algo").getClass()));
 	}
 	
 	@Test
-	void getInValidConfigExecutor() {
-		assertThrows(NoSuchBeanDefinitionException.class, () -> ClassUtils.getUserClass(beanFactory.getCommandExecutor("algo1").getClass()));
+	void getInValidAdaptor() {
+		assertThrows(NoSuchBeanDefinitionException.class, () -> ClassUtils.getUserClass(beanFactory.getAdaptor("algo1").getClass()));
 	}
 	
 	@Test
-	void testNullConfigExecutor() {
-		assertThrows(IllegalArgumentException.class, () -> ClassUtils.getUserClass(beanFactory.getCommandExecutor(null).getClass()));
+	void testNullAdaptor() {
+		assertThrows(IllegalArgumentException.class, () -> ClassUtils.getUserClass(beanFactory.getAdaptor(null).getClass()));
 	}
 
 }
