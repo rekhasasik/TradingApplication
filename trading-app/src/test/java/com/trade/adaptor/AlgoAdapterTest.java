@@ -1,12 +1,8 @@
 package com.trade.adaptor;
 
-import static com.trade.util.TestUtil.signal1;
-import static com.trade.util.TestUtil.signal2;
-import static com.trade.util.TestUtil.signal3;
-import static com.trade.util.TestUtil.signalDefault;
-import static com.trade.util.TestUtil.signalWithInvalidParams;
-import static com.trade.util.TestUtil.signalWithInvalidCommandName;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static com.trade.util.TestUtil.commandWithInvalidName;
+import static com.trade.util.TestUtil.commandWithInvalidParams;
+import static com.trade.util.TestUtil.doAlgo;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -27,7 +23,7 @@ import com.trade.exception.BadInputException;
 public class AlgoAdapterTest {
 	
 	@Autowired
-	private AlgoAdapter adapter;
+	private AlgoAdapter adaptor;
 	
 	private final PrintStream standardOut = System.out;
 	private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -44,57 +40,26 @@ public class AlgoAdapterTest {
 	
 	
 	@Test
-	@DisplayName("Should not throw an exception")
+	@DisplayName("Should throw an exception")
 	void testExecuteForEmptyCommands() {
-		assertDoesNotThrow(() -> adapter.execute(null));
+		assertThrows(BadInputException.class, () -> adaptor.execute(null));
 		
 	}
 	
 	@Test
-	void testExecuteSignal1() {
-		adapter.execute(signal1());
-		 assertTrue(outputStreamCaptor.toString().contains("setUp"));
-		 assertTrue(outputStreamCaptor.toString().contains("setAlgoParam 1,60"));
-		 assertTrue(outputStreamCaptor.toString().contains("performCalc"));
-		 assertTrue(outputStreamCaptor.toString().contains("submitToMarket"));
-		 assertTrue(outputStreamCaptor.toString().contains("doAlgo"));
-	}
-	
-	@Test
-	void testExecuteSignal3() {
-		adapter.execute(signal3());
-		assertTrue(outputStreamCaptor.toString().contains("setAlgoParam 1,90"));
-		 assertTrue(outputStreamCaptor.toString().contains("setAlgoParam 2,15"));
-		 assertTrue(outputStreamCaptor.toString().contains("performCalc"));
-		 assertTrue(outputStreamCaptor.toString().contains("submitToMarket"));
-		 assertTrue(outputStreamCaptor.toString().contains("doAlgo"));
-	}
-	
-	@Test
-	void testExecuteSignal2() {
-		 adapter.execute(signal2());
-		 assertTrue(outputStreamCaptor.toString().contains("reverse"));
-		 assertTrue(outputStreamCaptor.toString().contains("setAlgoParam 1,80"));
-		 assertTrue(outputStreamCaptor.toString().contains("submitToMarket"));
-		 assertTrue(outputStreamCaptor.toString().contains("doAlgo"));
-	}
-	
-	@Test
-	void testExecuteSignalDefault() {
-		 adapter.execute(signalDefault());
-		 assertTrue(outputStreamCaptor.toString().contains("cancelTrades"));
+	void testExecuteSignal() {
+		adaptor.execute(doAlgo());
 		 assertTrue(outputStreamCaptor.toString().contains("doAlgo"));
 	}
 	
 	@Test
 	void testExecuteSignalWithInvalidParams() {
-		 assertThrows(BadInputException.class, () -> adapter.execute(signalWithInvalidParams()));
+		 assertThrows(BadInputException.class, () -> adaptor.execute(commandWithInvalidParams()));
 	}
 	
 	@Test
 	void testExecuteSignalWithInvalidCommand() {
-		 BadInputException exp = assertThrows(BadInputException.class, () -> adapter.execute(signalWithInvalidCommandName()));
+		 BadInputException exp = assertThrows(BadInputException.class, () -> adaptor.execute(commandWithInvalidName()));
 		 assertEquals("Command setParam Invalid", exp.getMessage());
 	}
-
 }

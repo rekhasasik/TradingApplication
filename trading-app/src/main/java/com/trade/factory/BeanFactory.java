@@ -3,7 +3,7 @@ package com.trade.factory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Component;
 
-import com.trade.command.ICommandExecutor;
+import com.trade.adaptor.IAdaptor;
 
 @Component
 public class BeanFactory {
@@ -14,8 +14,8 @@ public class BeanFactory {
 		this.context = context;
 	}
 	
-	public ICommandExecutor getCommandExecutor(final String name) {
-		return context.getBean(name, ICommandExecutor.class);
+	public IAdaptor getAdaptor(final String name) {
+		return context.getBean(name, IAdaptor.class);
 	}
 
 }

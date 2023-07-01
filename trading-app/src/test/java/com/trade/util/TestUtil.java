@@ -86,6 +86,20 @@ public class TestUtil {
 		return commands;
 	}
 	
+	public static Command commandWithInvalidParams() {
+		Map<String, Object> params = new HashedMap<>();
+		params.put("param", 1.5);
+		params.put("value", 60);
+		return new Command("setAlgoParam", "algo", params);
+	}
+	
+	public static Command commandWithInvalidName() {
+		Map<String, Object> params = new HashedMap<>();
+		params.put("param", 1);
+		params.put("value", 60);
+		return new Command("setParam", "algo", params);
+	}
+	
 	public static List<Command> signalWithInvalidCommandName() {
 		List<Command> commands = new ArrayList<>();
 		Command command = new Command("setUp", "algo", null);
@@ -96,6 +110,13 @@ public class TestUtil {
 		command = new Command("setParam", "algo", params);
 		commands.add(command);
 		return commands;
+	}
+	
+	
+	public static Command doAlgo() {
+		
+		return new Command("doAlgo", "algo", null);
+	
 	}
 
 }
