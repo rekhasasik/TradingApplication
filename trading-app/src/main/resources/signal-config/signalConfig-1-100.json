@@ -1,0 +1,106 @@
+[
+	{
+		"signal": 1,
+		"commands":[
+			{
+				"name":"setUp",
+				"type": "algo"
+			},
+			{
+				"name":"setAlgoParam",
+				"type": "algo",
+				"params": {
+					"param":1,
+					"value":60
+				}
+			},
+			{
+				"name":"performCalc",
+				"type": "algo"
+			},
+			{
+				"name":"submitToMarket",
+				"type": "algo"
+			}			
+		]
+	},
+	{
+		"signal": 2,
+		"commands":[
+			{
+				"name":"reverse",
+				"type": "algo"
+			},
+			{
+				"name":"setAlgoParam",
+				"type": "algo",
+				"params": {
+					"param":1,
+					"value":80
+				}
+			},
+			{
+				"name":"submitToMarket",
+				"type": "algo"
+			}			
+		]
+	},	
+	{
+		"signal": 3,
+		"commands":[
+			{
+				"name":"setAlgoParam",
+				"type": "algo",
+				"params": {
+					"param":1,
+					"value":90
+				}
+			},
+			{
+				"name":"setAlgoParam",
+				"type": "algo",
+				"params": {
+					"param":2,
+					"value":15
+				}
+			},
+			{
+				"name":"performCalc",
+				"type": "algo"
+			},
+			{
+				"name":"submitToMarket",
+				"type": "algo"
+			}			
+		]
+	},
+	{
+		"signal": 10,
+		"commands":[
+			{
+				"name":"setAlgoParam",
+				"type": "algo",
+				"params": {
+					"param":1,
+					"value":100
+				}
+			},
+			{
+				"name":"performCalc",
+				"type": "algo"
+			},
+			{
+				"name":"setAlgoParam",
+				"type": "algo",
+				"params": {
+					"param":2,
+					"value":150
+				}
+			},
+			{
+				"name":"submitToMarket",
+				"type": "algo"
+			}			
+		]
+	}
+]
