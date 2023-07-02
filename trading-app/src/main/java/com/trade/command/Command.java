@@ -11,6 +11,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+/**
+ * Each Command object contains
+ * name - matching method in @Algo class
+ * Type - Adaptor class to be applied. "algo" -> @AlgoAdapter class
+ * params - paramaters that need to be applied to the target method of @Algo class
+ * @author Sasi Rekha
+ *
+ */
+
 @Getter
 @Setter
 @Data

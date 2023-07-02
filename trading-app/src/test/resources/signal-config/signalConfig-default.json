@@ -1,0 +1,10 @@
+[
+	{
+		"commands":[
+			{
+				"name":"cancelTrades",
+				"type": "algo"
+			}			
+		]
+	}
+]
